@@ -1,42 +1,108 @@
-local function createBillboard(model)
-    local billboard = Instance.new("BillboardGui")
-    billboard.Name = "ModelNameGui"
-    billboard.AlwaysOnTop = true
-    billboard.Size = UDim2.new(0, 100, 0, 25)
-    billboard.StudsOffset = Vector3.new(0, 3, 0)
+local workspace = game:GetService("Workspace")
+local excludedModel = "i_FillKidsWithC3m" -- Lazy so only I am excluded
+local highlightFolder = Instance.new("Folder", workspace)
 
-    local textLabel = Instance.new("TextLabel")
-    textLabel.Size = UDim2.new(1, 0, 1, 0)
-    textLabel.BackgroundTransparency = 1
-    textLabel.TextScaled = true
-    textLabel.TextStrokeTransparency = 0.8
-    textLabel.Font = Enum.Font.SourceSansBold
-    textLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    textLabel.Text = model.Name
+--> Billboard GUI (Name)
+local function createBillboardGui(part, modelName)
+    if not part:FindFirstChild("NameTag") then
+        local billboardGui = Instance.new("BillboardGui")
+        billboardGui.Name = "NameTag"
+        billboardGui.Adornee = part
+        billboardGui.Size = UDim2.new(5, 0, 1, 0)
+        billboardGui.StudsOffset = Vector3.new(0, 2, 0)
+        billboardGui.Parent = part
 
-    textLabel.Parent = billboard
-    billboard.Parent = model:FindFirstChild("Head") or model.PrimaryPart
+        local textLabel = Instance.new("TextLabel")
+        textLabel.Size = UDim2.new(1, 0, 1, 0)
+        textLabel.Text = modelName
+        textLabel.BackgroundTransparency = 1
+        textLabel.TextColor3 = Color3.new(1, 1, 1)
+        textLabel.TextStrokeTransparency = 0
+        textLabel.Font = Enum.Font.SourceSansBold
+        textLabel.TextScaled = true
+        textLabel.Parent = billboardGui
+    end
 end
 
-local function checkAndAttachBillboards()
-    for _, player in pairs(game.Players:GetPlayers()) do
-        local character = player.Character
-        if character and not character:FindFirstChild("ModelNameGui") then
-            createBillboard(character)
+--> Highlight the parts
+local function highlightParts(model)
+    if model.Name ~= excludedModel then
+        -- Highlight Head
+        local headPart = model:FindFirstChild("Head")
+        if headPart and headPart:IsA("Part") then
+            if not headPart:FindFirstChild("Highlight") then
+                local headHighlight = Instance.new("Highlight")
+                headHighlight.Adornee = headPart
+                headHighlight.Parent = headPart
+                headHighlight.FillColor = Color3.fromRGB(255, 255, 0)
+                headHighlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+                headHighlight.FillTransparency = 0.5
+                headHighlight.OutlineTransparency = 0
+                headPart.CanCollide = false
+                headPart.Transparency = 0
+                createBillboardGui(headPart, model.Name)
+            end
+        end
+
+        -- Highlight Torso
+        local torsoPart = model:FindFirstChild("Torso")
+        if torsoPart and torsoPart:IsA("Part") then
+            if not torsoPart:FindFirstChild("Highlight") then
+                local torsoHighlight = Instance.new("Highlight")
+                torsoHighlight.Adornee = torsoPart
+                torsoHighlight.Parent = torsoPart
+                torsoHighlight.FillColor = Color3.fromRGB(255, 255, 0)
+                torsoHighlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+                torsoHighlight.FillTransparency = 0.5
+                torsoHighlight.OutlineTransparency = 0
+                torsoPart.CanCollide = false
+                torsoPart.Transparency = 0
+            end
+        end
+
+        -- Highlight Right Arm
+        local rArm = model:FindFirstChild("Right Arm")
+        if rArm and rArm:IsA("Part") then
+            if not rArm:FindFirstChild("Highlight") then
+                local rArmHighlight = Instance.new("Highlight")
+                rArmHighlight.Adornee = rArm
+                rArmHighlight.Parent = rArm
+                rArmHighlight.FillColor = Color3.fromRGB(255, 255, 0)
+                rArmHighlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+                rArmHighlight.FillTransparency = 0.5
+                rArmHighlight.OutlineTransparency = 0
+                rArm.CanCollide = false
+                rArm.Transparency = 0
+            end
+        end
+
+        -- Highlight Left Arm
+        local lArm = model:FindFirstChild("Left Arm")
+        if lArm and lArm:IsA("Part") then
+            if not lArm:FindFirstChild("Highlight") then
+                local lArmHighlight = Instance.new("Highlight")
+                lArmHighlight.Adornee = lArm
+                lArmHighlight.Parent = lArm
+                lArmHighlight.FillColor = Color3.fromRGB(255, 255, 0)
+                lArmHighlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+                lArmHighlight.FillTransparency = 0.5
+                lArmHighlight.OutlineTransparency = 0
+                lArm.CanCollide = false
+                lArm.Transparency = 0
+            end
+        end
+    end
+end
+
+local function checkAndHighlight()
+    for _, object in ipairs(workspace:GetChildren()) do
+        if object:IsA("Model") then
+            highlightParts(object)
         end
     end
 end
 
 while true do
-    checkAndAttachBillboards()
-    wait(10)
+    checkAndHighlight()
+    wait(1)
 end
-
-game.Players.PlayerAdded:Connect(function(player)
-    player.CharacterAdded:Connect(function(character)
-        wait(1)
-        if not character:FindFirstChild("ModelNameGui") then
-            createBillboard(character)
-        end
-    end)
-end)
