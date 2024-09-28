@@ -24,7 +24,8 @@ local function createRainbowBillboardGui(part, playerName)
         textLabel.BackgroundTransparency = 1
         textLabel.TextStrokeTransparency = 0
         textLabel.Font = Enum.Font.SourceSansBold
-        textLabel.TextScaled = true
+        textLabel.TextScaled = false
+        textLabel.TextSize = 14
         textLabel.Parent = billboardGui
         spawn(function()
             local hue = 0
