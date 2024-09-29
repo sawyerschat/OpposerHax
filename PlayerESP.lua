@@ -14,19 +14,22 @@ local function createRainbowBillboardGui(part, playerName)
         billboardGui.Name = "PlayerTag"
         billboardGui.Adornee = part
         billboardGui.Size = UDim2.new(0, 200, 0, 50)
-        billboardGui.StudsOffset = Vector3.new(0, 2, 0)
+        
+        -- Increase the y value for 25% more height above the head
+        billboardGui.StudsOffset = Vector3.new(0, 2.5 * 1.25, 0)  -- Adjust y value to be 25% higher
         billboardGui.AlwaysOnTop = true
         billboardGui.Parent = part
 
         local textLabel = Instance.new("TextLabel")
         textLabel.Size = UDim2.new(1, 0, 1, 0)
-        textLabel.Text = playerName .. " | Player"
+        textLabel.Text = playerName
         textLabel.BackgroundTransparency = 1
         textLabel.TextStrokeTransparency = 0
         textLabel.Font = Enum.Font.SourceSansBold
         textLabel.TextScaled = false
-        textLabel.TextSize = 14
+        textLabel.TextSize = 10
         textLabel.Parent = billboardGui
+        
         spawn(function()
             local hue = 0
             while true do
@@ -37,6 +40,7 @@ local function createRainbowBillboardGui(part, playerName)
         end)
     end
 end
+
 
 local function processPlayerModel(model)
     if model:IsA("Model") and model:FindFirstChild("Humanoid") then
