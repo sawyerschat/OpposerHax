@@ -12,7 +12,8 @@ local pistolNames = {
 local whiteItemNames = {
     "Radio",
     "Super Shotgun",
-    "Knife"
+    "Knife",
+    "Desert Eagle"
 }
 
 local secretItemNames = {
