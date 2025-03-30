@@ -15,10 +15,10 @@ local function createPlayerDisplay(player)
     -- Create BillboardGui (smaller size)
     local billboard = Instance.new("BillboardGui")
     billboard.Name = "PlayerDisplayGui"
-    billboard.Size = UDim2.new(0, 120, 0, 35) -- Even smaller size
+    billboard.Size = UDim2.new(0, 90, 0, 28) -- Even smaller size
     billboard.Adornee = head
     billboard.AlwaysOnTop = true
-    billboard.StudsOffset = Vector3.new(0, 4.5, 0) -- Slightly lower
+    billboard.StudsOffset = Vector3.new(0, 5, 0) -- Slightly lower
     billboard.Parent = head
     
     -- Create main container
@@ -127,15 +127,10 @@ local function createPlayerDisplay(player)
             torsoHitbox.Transparency = 0
             torsoHitbox.Color = Color3.fromRGB(230, 50, 50) -- Red color
             
-            -- Add highlight to TorsoHitbox if it doesn't have one
-            if not torsoHitbox:FindFirstChild("Highlight") then
-                local highlight = Instance.new("Highlight")
-                highlight.Name = "Highlight"
-                highlight.FillColor = Color3.fromRGB(230, 50, 50)
-                highlight.OutlineColor = Color3.fromRGB(255, 150, 150)
-                highlight.FillTransparency = 1
-                highlight.OutlineTransparency = 1
-                highlight.Parent = torsoHitbox
+            -- Remove highlight from TorsoHitbox if it exists
+            local highlight = torsoHitbox:FindFirstChild("Highlight")
+            if highlight then
+                highlight:Destroy()
             end
         end
         
