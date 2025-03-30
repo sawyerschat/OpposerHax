@@ -18,7 +18,7 @@ local function createPlayerDisplay(player)
     billboard.Size = UDim2.new(0, 120, 0, 35) -- Even smaller size
     billboard.Adornee = head
     billboard.AlwaysOnTop = true
-    billboard.StudsOffset = Vector3.new(0, 1.6, 0) -- Slightly lower
+    billboard.StudsOffset = Vector3.new(0, 4.5, 0) -- Slightly lower
     billboard.Parent = head
     
     -- Create main container
@@ -133,8 +133,8 @@ local function createPlayerDisplay(player)
                 highlight.Name = "Highlight"
                 highlight.FillColor = Color3.fromRGB(230, 50, 50)
                 highlight.OutlineColor = Color3.fromRGB(255, 150, 150)
-                highlight.FillTransparency = 0.5
-                highlight.OutlineTransparency = 0
+                highlight.FillTransparency = 1
+                highlight.OutlineTransparency = 1
                 highlight.Parent = torsoHitbox
             end
         end
